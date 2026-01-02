@@ -17,7 +17,6 @@ export class GetProfileService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  // BUSCA PERFIL PELO ID DO USUÁRIO
   async findByUser(userId: string): Promise<GetProfileResponseDto> {
     const profile = await this.profileRepository.findOne({
       where: { user: { idUsers: userId } },
@@ -32,8 +31,9 @@ export class GetProfileService {
       idProfiles: profile.idProfiles,
       idUsers: profile.user.idUsers,
       phone: profile.phone,
-      heightCm: profile.heightCm,
-      weightKg: profile.weightKg,
+      currentWeight: profile.currentWeight,
+      currentHeight: profile.currentHeight,
+      currentImc: profile.currentImc,
       birthDate: profile.birthDate,
       sex: profile.sex,
       activityLevel: profile.activityLevel,
@@ -45,7 +45,6 @@ export class GetProfileService {
     };
   }
 
-  // BUSCA PERFIL PELO ID DO PERFIL OU ID DO USUÁRIO
   async findOne(input: GetProfileInputDto): Promise<GetProfileResponseDto> {
     GetProfileValidator.ensureValidInput(input);
 
@@ -65,8 +64,9 @@ export class GetProfileService {
       idProfiles: profile.idProfiles,
       idUsers: profile.user.idUsers,
       phone: profile.phone,
-      heightCm: profile.heightCm,
-      weightKg: profile.weightKg,
+      currentWeight: profile.currentWeight,
+      currentHeight: profile.currentHeight,
+      currentImc: profile.currentImc,
       birthDate: profile.birthDate,
       sex: profile.sex,
       activityLevel: profile.activityLevel,

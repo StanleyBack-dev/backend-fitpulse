@@ -6,8 +6,9 @@ type CreateProfileResponseDto {
   idProfiles: String!
   idUsers: String!
   phone: String
-  heightCm: Float
-  weightKg: Float
+  currentWeight: Float
+  currentHeight: Float
+  currentImc: Float
   birthDate: DateTime
   sex: String
   activityLevel: String
@@ -27,8 +28,9 @@ type GetProfileResponseDto {
   idProfiles: String!
   idUsers: String!
   phone: String
-  heightCm: Float
-  weightKg: Float
+  currentWeight: Float
+  currentHeight: Float
+  currentImc: Float
   birthDate: DateTime
   sex: String
   activityLevel: String
@@ -43,8 +45,9 @@ type UpdateProfileResponseDto {
   idProfiles: String!
   idUsers: String!
   phone: String
-  heightCm: Float
-  weightKg: Float
+  currentWeight: Float
+  currentHeight: Float
+  currentImc: Float
   birthDate: DateTime
   sex: String
   activityLevel: String
@@ -54,9 +57,48 @@ type UpdateProfileResponseDto {
   updatedAt: DateTime!
 }
 
+type GetHealthResponseDto {
+  idHealth: String!
+  idUsers: String!
+  heightCm: Float!
+  weightKg: Float!
+  bmi: Float!
+  bmiStatus: String!
+  observation: String
+  measurementDate: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CreateHealthResponseDto {
+  idHealth: String!
+  idUsers: String!
+  heightCm: Float!
+  weightKg: Float!
+  bmi: Float!
+  bmiStatus: String!
+  observation: String
+  measurementDate: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UpdateHealthResponseDto {
+  idHealth: String!
+  idUsers: String!
+  heightCm: Float!
+  weightKg: Float!
+  bmi: Float!
+  bmiStatus: String!
+  observation: String
+  measurementDate: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   getMyProfile: GetProfileResponseDto!
   getProfile(input: GetProfileInputDto!): GetProfileResponseDto!
+  getHealthHistory(input: GetHealthInputDto): [GetHealthResponseDto!]!
 }
 
 input GetProfileInputDto {
@@ -64,16 +106,25 @@ input GetProfileInputDto {
   idUsers: String
 }
 
+input GetHealthInputDto {
+  idHealth: String
+  startDate: String
+  endDate: String
+}
+
 type Mutation {
   createProfile(input: CreateProfileInputDto!): CreateProfileResponseDto!
   updateMyProfile(input: UpdateProfileInputDto!): UpdateProfileResponseDto!
+  createHealth(input: CreateHealthInputDto!): CreateHealthResponseDto!
+  updateHealthRecord(input: UpdateHealthInputDto!): UpdateHealthResponseDto!
 }
 
 input CreateProfileInputDto {
   idUsers: String!
   phone: String
-  heightCm: Float
-  weightKg: Float
+  currentWeight: Float
+  currentHeight: Float
+  currentImc: Float
   birthDate: String
   sex: String
   activityLevel: String
@@ -82,10 +133,26 @@ input CreateProfileInputDto {
 
 input UpdateProfileInputDto {
   phone: String
-  heightCm: Float
-  weightKg: Float
+  currentWeight: Float
+  currentHeight: Float
+  currentImc: Float
   birthDate: String
   sex: String
   activityLevel: String
   goal: String
+}
+
+input CreateHealthInputDto {
+  heightCm: Float!
+  weightKg: Float!
+  observation: String
+  measurementDate: DateTime!
+}
+
+input UpdateHealthInputDto {
+  idHealth: String!
+  heightCm: Float
+  weightKg: Float
+  observation: String
+  measurementDate: DateTime
 }

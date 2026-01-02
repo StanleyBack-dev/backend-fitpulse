@@ -42,16 +42,17 @@ export class CreateProfileService {
     }
 
     const profile = this.profileRepository.create({
+      user,
       phone: input.phone,
-      heightCm: input.heightCm,
-      weightKg: input.weightKg,
+      currentWeight: input.currentWeight,
+      currentHeight: input.currentHeight,
+      currentImc: input.currentImc,
       birthDate: input.birthDate ? new Date(input.birthDate) : undefined,
       sex: input.sex,
       activityLevel: input.activityLevel,
       goal: input.goal,
       ipAddress,
       userAgent,
-      user,
     });
 
     const saved = await this.profileRepository.save(profile);
@@ -60,8 +61,9 @@ export class CreateProfileService {
       idProfiles: saved.idProfiles,
       idUsers: user.idUsers,
       phone: saved.phone,
-      heightCm: saved.heightCm,
-      weightKg: saved.weightKg,
+      currentWeight: saved.currentWeight,
+      currentHeight: saved.currentHeight,
+      currentImc: saved.currentImc,
       birthDate: saved.birthDate,
       sex: saved.sex,
       activityLevel: saved.activityLevel,

@@ -2,7 +2,6 @@ import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class GetProfileResponseDto {
-
   @Field()
   idProfiles: string;
 
@@ -13,22 +12,25 @@ export class GetProfileResponseDto {
   phone?: string;
 
   @Field({ nullable: true })
-  heightCm?: number;
+  currentWeight?: number;
 
   @Field({ nullable: true })
-  weightKg?: number;
+  currentHeight?: number;
+
+  @Field({ nullable: true })
+  currentImc?: number;
 
   @Field({ nullable: true })
   birthDate?: Date;
 
   @Field({ nullable: true })
-  sex?: string;
+  sex?: 'male' | 'female' | 'other';
 
   @Field({ nullable: true })
-  activityLevel?: string;
+  activityLevel?: 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active';
 
   @Field({ nullable: true })
-  goal?: string;
+  goal?: 'lose_weight' | 'maintain' | 'gain_weight';
 
   @Field({ nullable: true })
   ipAddress?: string;

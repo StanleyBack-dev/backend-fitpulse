@@ -2,14 +2,12 @@ import { BadRequestException } from '@nestjs/common';
 import { UpdateProfileInputDto } from '../../dtos/update/update-profile-input.dto';
 
 export class UpdateProfileValidator {
-
-  // GARANTE QUE PELO MENOS UM CAMPO FOI INFORMADO
   static ensureHasFields(input: UpdateProfileInputDto): void {
-
     const hasAnyField =
       input.phone !== undefined ||
-      input.heightCm !== undefined ||
-      input.weightKg !== undefined ||
+      input.currentHeight !== undefined ||
+      input.currentWeight !== undefined ||
+      input.currentImc !== undefined ||
       input.birthDate !== undefined ||
       input.sex !== undefined ||
       input.activityLevel !== undefined ||
@@ -21,17 +19,22 @@ export class UpdateProfileValidator {
       );
     }
 
-    // REGRA DE NEGÓCIO: NÃO PERMITE PESO SEM ALTURA
-    if (input.weightKg !== undefined && input.heightCm === undefined) {
+    if (input.currentWeight !== undefined && input.currentHeight === undefined) {
       throw new BadRequestException(
         'Para atualizar o peso, a altura também deve ser informada.'
       );
     }
 
-    // REGRA DE NEGÓCIO: NÃO PERMITE ALTURA SEM PESO
-    if (input.heightCm !== undefined && input.weightKg === undefined) {
+    if (input.currentHeight !== undefined && input.currentWeight === undefined) {
       throw new BadRequestException(
         'Para atualizar a altura, o peso também deve ser informado.'
+      );
+    }
+
+    if (input.currentImc !== undefined && 
+        (input.currentHeight === undefined || input.currentWeight === undefined)) {
+      throw new BadRequestException(
+        'Para atualizar o IMC, é necessário informar altura e peso.'
       );
     }
   }

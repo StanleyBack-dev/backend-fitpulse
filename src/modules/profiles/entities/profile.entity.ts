@@ -22,11 +22,14 @@ export class ProfileEntity {
   @Column({ nullable: true })
   phone?: string;
 
-  @Column({ type: 'int', nullable: true })
-  heightCm?: number;
+   @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true })
+  currentWeight?: number;
 
-  @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true })
-  weightKg?: number;
+  @Column({ type: 'decimal', precision: 4, scale: 2, nullable: true })
+  currentHeight?: number;
+
+  @Column({ nullable: true })
+  currentImc?: number;
 
   @Column({ type: 'date', nullable: true })
   birthDate?: Date;

@@ -26,7 +26,6 @@ export class UpdateProfileService {
 
     UpdateProfileValidator.ensureHasFields(input);
 
-    // BUSCA O PERFIL DO USUÁRIO AUTENTICADO
     const profile = await this.profileRepository.findOne({
       where: { user: { idUsers: userId } },
       relations: ['user'],
@@ -36,15 +35,15 @@ export class UpdateProfileService {
       throw new NotFoundException('Perfil não encontrado para este usuário.');
     }
 
-    // GARANTE QUE O USUÁRIO SÓ POSSA ATUALIZAR O PRÓPRIO PERFIL
     if (profile.user.idUsers !== userId) {
       throw new ForbiddenException('Você não tem permissão para editar este perfil.');
     }
 
     Object.assign(profile, {
       phone: input.phone ?? profile.phone,
-      heightCm: input.heightCm ?? profile.heightCm,
-      weightKg: input.weightKg ?? profile.weightKg,
+      currentWeight: input.currentWeight ?? profile.currentWeight,
+      currentHeight: input.currentHeight ?? profile.currentHeight,
+      currentImc: input.currentImc ?? profile.currentImc,
       birthDate: input.birthDate ? new Date(input.birthDate) : profile.birthDate,
       sex: input.sex ?? profile.sex,
       activityLevel: input.activityLevel ?? profile.activityLevel,
@@ -59,8 +58,9 @@ export class UpdateProfileService {
       idProfiles: updated.idProfiles,
       idUsers: updated.user.idUsers,
       phone: updated.phone,
-      heightCm: updated.heightCm,
-      weightKg: updated.weightKg,
+      currentWeight: updated.currentWeight,
+      currentHeight: updated.currentHeight,
+      currentImc: updated.currentImc,
       birthDate: updated.birthDate,
       sex: updated.sex,
       activityLevel: updated.activityLevel,

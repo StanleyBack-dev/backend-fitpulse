@@ -1,18 +1,16 @@
 import { InputType, Field } from '@nestjs/graphql';
 import {
   IsOptional,
-  IsInt,
   IsEnum,
   IsDateString,
   IsNumber,
   IsPhoneNumber,
   Min,
-  Max
+  Max,
 } from 'class-validator';
 
 @InputType()
 export class UpdateProfileInputDto {
-
   @Field({ nullable: true })
   @IsOptional()
   @IsPhoneNumber('BR')
@@ -20,17 +18,24 @@ export class UpdateProfileInputDto {
 
   @Field({ nullable: true })
   @IsOptional()
-  @IsInt()
-  @Min(50)
-  @Max(250)
-  heightCm?: number;
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(20)
+  @Max(500)
+  currentWeight?: number;
 
   @Field({ nullable: true })
   @IsOptional()
   @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(20)
-  @Max(500)
-  weightKg?: number;
+  @Min(1.0)
+  @Max(2.5)
+  currentHeight?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(10)
+  @Max(80)
+  currentImc?: number;
 
   @Field({ nullable: true })
   @IsOptional()
