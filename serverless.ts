@@ -6,7 +6,7 @@ import { createServer, IncomingMessage, ServerResponse } from 'http';
 
 let server: ReturnType<typeof createServer>;
 
-export default async function handler(req: IncomingMessage, res: ServerResponse) {
+async function handler(req: IncomingMessage, res: ServerResponse) {
   if (!server) {
     const app = await NestFactory.create(AppModule);
     app.use(cookieParser());
@@ -16,9 +16,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     app.enableCors(corsOptions);
 
     await app.init();
-
     server = createServer(app.getHttpAdapter().getInstance());
   }
 
   return server.emit('request', req, res);
 }
+
+module.exports = handler;
