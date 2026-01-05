@@ -47,7 +47,7 @@ export class AuthController {
   ): Promise<void> {
     const googleUser = await this.googleAuthService.exchangeCodeForUser(query.code);
 
-    const { accessToken, refreshToken } = await this.authService.loginWithGoogle(
+    const { refreshToken } = await this.authService.loginWithGoogle(
       googleUser,
       requestInfo?.ipAddress,
       requestInfo?.userAgent,
@@ -55,9 +55,7 @@ export class AuthController {
 
     res.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, REFRESH_TOKEN_COOKIE_OPTIONS);
 
-    const redirectUrl = `${process.env.FRONTEND_URL}/home?token=${accessToken}`;
-
-    res.redirect(redirectUrl);
+    res.redirect(`${process.env.FRONTEND_URL}/home`);
   }
 
   // === REFRESH TOKEN ===
