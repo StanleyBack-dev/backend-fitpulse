@@ -2,7 +2,6 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
 
 // INTERCEPTORS
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
@@ -27,7 +26,7 @@ import { AuthGuard } from './common/guards/auth.guards';
     DatabaseModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
+      autoSchemaFile: true,
       playground: true,
       context: ({ req, res }) => ({ req, res }),
     }),
