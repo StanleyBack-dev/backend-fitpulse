@@ -17,18 +17,21 @@ import { UpdateUserService } from "./services/update/update-user.service";
 import { UpdateUserLoginService } from "./services/update/update-user-login.service";
 import { CreateUserService } from "./services/create/create-user.service";
 
+// RESOLVERS
+import { GetUsersResolver } from "./resolvers/get/get-users.resolver";
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]),
     forwardRef(() => AuthModule),
   ],
-
   providers: [
     CreateUserService,
     GetUsersService,
     UpdateUserService,
     UpdateUserLoginService,
     UserExistsValidator,
+    GetUsersResolver,
   ],
   exports: [
     CreateUserService,

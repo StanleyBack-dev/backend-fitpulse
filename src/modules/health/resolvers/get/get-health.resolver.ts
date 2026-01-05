@@ -9,7 +9,7 @@ export class GetHealthResolver {
   constructor(private readonly getHealthService: GetHealthService) {}
 
   @Query(() => [GetHealthResponseDto])
-  async getHealthHistory(
+  async getHealth(
     @CurrentUser() user: any,
     @Args('input', { nullable: true }) input?: GetHealthInputDto,
   ): Promise<GetHealthResponseDto[]> {

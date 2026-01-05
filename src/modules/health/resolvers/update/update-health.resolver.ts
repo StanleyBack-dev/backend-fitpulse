@@ -9,7 +9,7 @@ export class UpdateHealthResolver {
   constructor(private readonly updateHealthService: UpdateHealthService) {}
 
   @Mutation(() => UpdateHealthResponseDto)
-  async updateHealthRecord(
+  async updateHealth(
     @CurrentUser() user: any,
     @Args('input') input: UpdateHealthInputDto,
   ): Promise<UpdateHealthResponseDto> {
