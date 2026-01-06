@@ -18,7 +18,9 @@ export class RefreshTokenController {
 
     const token = req.cookies?.[REFRESH_TOKEN_COOKIE_NAME]; 
 
-    if (!token) return res.status(400).json({ authenticated: false });
+    console.log('Cookies recebidos:', req.cookies);
+
+    if (!token) return res.status(401).json({ authenticated: false });
 
     try {
       await this.tokenValidation.validateRefreshToken(token);

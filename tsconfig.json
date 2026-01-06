@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist",
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -11,7 +13,6 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2020",
     "sourceMap": true,
-    "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
@@ -20,5 +21,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": ["src/**/*.ts", "serverless.ts"]
 }
