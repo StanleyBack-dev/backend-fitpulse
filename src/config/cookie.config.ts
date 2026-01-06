@@ -7,7 +7,8 @@ export const REFRESH_TOKEN_COOKIE_NAME = 'refreshToken';
 export const REFRESH_TOKEN_COOKIE_OPTIONS: CookieOptions = {
   httpOnly: true,
   secure: IS_PRODUCTION,
-  sameSite: IS_PRODUCTION ? 'none' : 'none',
+  sameSite: 'none',
   path: '/',
+  domain: '.fitpulseio.com.br',
   maxAge: 30 * 24 * 60 * 60 * 1000,
 };
