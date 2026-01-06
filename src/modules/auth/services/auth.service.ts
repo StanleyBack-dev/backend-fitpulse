@@ -103,12 +103,16 @@ export class AuthService {
     return { user, accessToken, refreshToken, isNewUser };
   }
 
-  async refreshSession(refreshToken: string) {
+  async refreshSession(input: string | { refreshToken: string }) {
+    const refreshToken =
+      typeof input === 'string' ? input : input.refreshToken;
+
     const payload = this.tokenService.verifyRefreshToken(refreshToken);
     const session = await this.validateSessionService.execute(
       refreshToken,
       payload.sub,
     );
+
     if (!session) throw new UnauthorizedException();
 
     await this.refreshSessionService.execute(session);
