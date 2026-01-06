@@ -15,19 +15,25 @@ export class RefreshTokenController {
   @Public()
   @Post('refresh')
   async refresh(@Req() req: Request, @Res() res: Response) {
-
-    const token = req.cookies?.[REFRESH_TOKEN_COOKIE_NAME]; 
+    const cookieToken = req.cookies?.[REFRESH_TOKEN_COOKIE_NAME];
+    const bodyToken = req.body?.refreshToken;
+    const token = typeof cookieToken === 'string' && cookieToken.trim() !== ''
+      ? cookieToken
+      : bodyToken;
 
     console.log('Cookies recebidos:', req.cookies);
+    console.log('Token selecionado:', token);
 
-    if (!token) return res.status(401).json({ authenticated: false });
+    if (!token || typeof token !== 'string' || token.trim() === '') {
+      return res.status(401).json({ authenticated: false });
+    }
 
     try {
       await this.tokenValidation.validateRefreshToken(token);
       const { accessToken } = await this.authService.refreshSession(token);
       return res.json({ authenticated: true, accessToken });
-    } catch {
-
+    } catch (err) {
+      console.error('Erro no refresh:', err);
       return res.status(401).json({ authenticated: false });
     }
   }
