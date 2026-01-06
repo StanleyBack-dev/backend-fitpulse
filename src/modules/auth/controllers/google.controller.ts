@@ -30,13 +30,11 @@ export class GoogleController {
   @Get('callback')
   async callback(
     @Query() query: GoogleAuthInputDto,
-    @Req() req: Request,
     @Res() res: Response,
     @RequestInfo() requestInfo: { ipAddress?: string; userAgent?: string },
   ): Promise<void> {
-    const googleUser = await this.googleAuthService.exchangeCodeForUser(query.code);
-    const { refreshToken } = await this.authService.loginWithGoogle(
-      googleUser,
+    const { refreshToken } = await this.googleAuthService.authenticate(
+      query.code,
       requestInfo?.ipAddress,
       requestInfo?.userAgent,
     );
