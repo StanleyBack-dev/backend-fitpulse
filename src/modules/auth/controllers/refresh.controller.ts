@@ -5,8 +5,8 @@ import { TokenValidationService } from '../services/token-validation.service';
 import { AuthService } from '../services/auth.service';
 import { REFRESH_TOKEN_COOKIE_NAME } from '../../../config/cookie.config';
 
-@Controller('api/auth')
-export class RefreshTokenController {
+@Controller('api/auth/token')
+export class RefreshController {
   constructor(
     private readonly tokenValidation: TokenValidationService,
     private readonly authService: AuthService,
@@ -15,14 +15,9 @@ export class RefreshTokenController {
   @Public()
   @Post('refresh')
   async refresh(@Req() req: Request, @Res() res: Response) {
-    const cookieToken = req.cookies?.[REFRESH_TOKEN_COOKIE_NAME];
-    const bodyToken = req.body?.refreshToken;
-    const token = typeof cookieToken === 'string' && cookieToken.trim() !== ''
-      ? cookieToken
-      : bodyToken;
-
-    console.log('Cookies recebidos:', req.cookies);
-    console.log('Token selecionado:', token);
+    const token =
+      req.cookies?.[REFRESH_TOKEN_COOKIE_NAME] ||
+      req.body?.refreshToken;
 
     if (!token || typeof token !== 'string' || token.trim() === '') {
       return res.status(401).json({ authenticated: false });
@@ -30,10 +25,9 @@ export class RefreshTokenController {
 
     try {
       await this.tokenValidation.validateRefreshToken(token);
-      const { accessToken } = await this.authService.refreshSession(token);
+      const accessToken = await this.authService.refresh(token);
       return res.json({ authenticated: true, accessToken });
-    } catch (err) {
-      console.error('Erro no refresh:', err);
+    } catch {
       return res.status(401).json({ authenticated: false });
     }
   }

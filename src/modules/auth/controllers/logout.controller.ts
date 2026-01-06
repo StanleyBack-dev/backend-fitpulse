@@ -4,14 +4,12 @@ import { AuthService } from '../services/auth.service';
 import { Public } from '../../../common/decorators/public.decorator';
 import { REFRESH_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_OPTIONS } from '../../../config/cookie.config';
 
-@Controller('api/auth')
+@Controller('api/auth/logout')
 export class LogoutController {
-  constructor(
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
-  @Post('logout')
+  @Post()
   async logout(
     @Body('refreshToken') refreshTokenBody: string,
     @Req() req: Request,
@@ -19,9 +17,7 @@ export class LogoutController {
   ): Promise<void> {
     const token = req.cookies?.[REFRESH_TOKEN_COOKIE_NAME] || refreshTokenBody;
 
-    if (token) {
-      await this.authService.revokeSession(token);
-    }
+    if (token) await this.authService.revoke(token);
 
     res.clearCookie(REFRESH_TOKEN_COOKIE_NAME, {
       ...REFRESH_TOKEN_COOKIE_OPTIONS,

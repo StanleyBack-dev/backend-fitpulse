@@ -1,4 +1,14 @@
+import { Injectable } from '@nestjs/common';
+import { FindOrCreateUserService } from './find-or-create-user.service';
+import { GenerateSessionTokensService } from './generate-session-tokens.service';
+
+@Injectable()
 export class GoogleAuthService {
+  constructor(
+    private readonly findOrCreateUserService: FindOrCreateUserService,
+    private readonly generateSessionTokensService: GenerateSessionTokensService,
+  ) {}
+
   async exchangeCodeForUser(code: string) {
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
@@ -7,7 +17,7 @@ export class GoogleAuthService {
         code,
         client_id: process.env.GOOGLE_CLIENT_ID!,
         client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-        redirect_uri: `${process.env.API_URL}/api/auth/callback`,
+        redirect_uri: `${process.env.API_URL}/api/auth/google/callback`,
         grant_type: 'authorization_code',
       }),
     });
@@ -19,5 +29,11 @@ export class GoogleAuthService {
     });
 
     return await userRes.json();
+  }
+
+  async authenticate(code: string, ip?: string, agent?: string) {
+    const googleUser = await this.exchangeCodeForUser(code);
+    const user = await this.findOrCreateUserService.execute(googleUser, ip, agent);
+    return this.generateSessionTokensService.execute(user, ip, agent);
   }
 }

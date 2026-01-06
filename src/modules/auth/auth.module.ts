@@ -11,11 +11,16 @@ import { AuthService } from './services/auth.service';
 import { TokenService } from './services/token.service';
 import { GoogleAuthService } from './services/google-auth.service';
 import { TokenValidationService } from './services/token-validation.service';
+import { RefreshSessionService } from './services/refresh-session.service';
+import { RevokeSessionService } from './services/revoke-session.service';
+import { FindOrCreateUserService } from './services/find-or-create-user.service';
+import { GenerateSessionTokensService } from './services/generate-session-tokens.service';
 
 // CONTROLLERS
-import { AuthController } from './controllers/auth.controller';
+import { GoogleController } from './controllers/google.controller';
 import { LogoutController } from './controllers/logout.controller';
-import { RefreshTokenController } from './controllers/refresh-token.controller';
+import { RefreshController } from './controllers/refresh.controller';
+import { SessionController } from './controllers/session.controller';
 
 
 @Module({
@@ -24,15 +29,20 @@ import { RefreshTokenController } from './controllers/refresh-token.controller';
     SessionsModule,
   ],
   controllers: [
-    AuthController, 
+    GoogleController, 
     LogoutController, 
-    RefreshTokenController
+    RefreshController,
+    SessionController,
   ],
   providers: [
     AuthService,
     TokenValidationService,
     GoogleAuthService,
+    RefreshSessionService,
+    RevokeSessionService,
     TokenService,
+    FindOrCreateUserService,
+    GenerateSessionTokensService,
   ],
   exports: [AuthService, TokenValidationService],
 })
