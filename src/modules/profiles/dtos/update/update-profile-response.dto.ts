@@ -5,9 +5,6 @@ export class UpdateProfileResponseDto {
   @Field()
   idProfiles: string;
 
-  @Field()
-  idUsers: string;
-
   @Field({ nullable: true })
   phone?: string;
 
@@ -32,11 +29,8 @@ export class UpdateProfileResponseDto {
   @Field({ nullable: true })
   goal?: 'lose_weight' | 'maintain' | 'gain_weight';
 
-  @Field({ nullable: true })
-  ipAddress?: string;
-
-  @Field({ nullable: true })
-  userAgent?: string;
+  @Field()
+  createdAt: Date;
 
   @Field()
   updatedAt: Date;

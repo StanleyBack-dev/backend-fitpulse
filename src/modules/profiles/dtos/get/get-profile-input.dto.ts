@@ -8,8 +8,4 @@ export class GetProfileInputDto {
   @IsUUID()
   idProfiles?: string;
 
-  @Field({ nullable: true })
-  @IsOptional()
-  @IsUUID()
-  idUsers?: string;
 }

@@ -1,14 +1,12 @@
 import { Controller, Post, Body, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
-import { Public } from '../../../common/decorators/public.decorator';
 import { REFRESH_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_OPTIONS } from '../../../config/cookie.config';
 
 @Controller('api/auth/logout')
 export class LogoutController {
   constructor(private readonly authService: AuthService) {}
 
-  @Public()
   @Post()
   async logout(
     @Body('refreshToken') refreshTokenBody: string,

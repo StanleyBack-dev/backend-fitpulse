@@ -5,9 +5,6 @@ export class GetProfileResponseDto {
   @Field()
   idProfiles: string;
 
-  @Field()
-  idUsers: string;
-
   @Field({ nullable: true })
   phone?: string;
 
