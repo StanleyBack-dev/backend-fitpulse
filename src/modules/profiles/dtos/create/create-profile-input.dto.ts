@@ -1,10 +1,9 @@
 import { InputType, Field } from '@nestjs/graphql';
 import {
-  IsUUID,
   IsOptional,
   IsEnum,
   IsDateString,
-  IsNumber,
+  IsInt,
   IsPhoneNumber,
   Min,
   Max,
@@ -12,10 +11,7 @@ import {
 
 @InputType()
 export class CreateProfileInputDto {
-  @Field()
-  @IsUUID()
-  idUsers: string;
-
+  
   @Field({ nullable: true })
   @IsOptional()
   @IsPhoneNumber('BR')
@@ -23,21 +19,21 @@ export class CreateProfileInputDto {
 
   @Field({ nullable: true })
   @IsOptional()
-  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsInt()
   @Min(20)
   @Max(500)
   currentWeight?: number;
 
   @Field({ nullable: true })
   @IsOptional()
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(1.0)
-  @Max(2.5)
+  @IsInt()
+  @Min(100)
+  @Max(250)
   currentHeight?: number;
 
   @Field({ nullable: true })
   @IsOptional()
-  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsInt()
   @Min(10)
   @Max(80)
   currentImc?: number;

@@ -2,6 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { GetUsersService } from '../../users/services/get/get-users.service';
 import { CreateUserService } from '../../users/services/create/create-user.service';
 import { UpdateUserLoginService } from '../../users/services/update/update-user-login.service';
+import { CreateProfileService } from '../../profiles/services/create/create-profile.service';
 
 @Injectable()
 export class FindOrCreateUserService {
@@ -9,6 +10,7 @@ export class FindOrCreateUserService {
     private readonly getUsersService: GetUsersService,
     private readonly createUserService: CreateUserService,
     private readonly updateUserLoginService: UpdateUserLoginService,
+    private readonly createProfileService: CreateProfileService,
   ) {}
 
   async execute(googleUser: any, ip?: string, agent?: string) {
@@ -38,6 +40,8 @@ export class FindOrCreateUserService {
           ipAddress: ip,
           userAgent: agent,
         });
+
+        await this.createProfileService.createProfile(user.idUsers, ip, agent);
       }
     } else {
       user = await this.updateUserLoginService.updateLogin(user, ip, agent);

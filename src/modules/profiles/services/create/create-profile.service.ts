@@ -1,10 +1,7 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProfileEntity } from '../../entities/profile.entity';
-import { UserEntity } from '../../../users/entities/user.entity';
-import { CreateProfileInputDto } from '../../dtos/create/create-profile-input.dto';
-import { CreateProfileResponseDto } from '../../dtos/create/create-profile-response.dto';
 import { CreateProfileValidator } from '../../validators/create/create-profile.validator';
 
 @Injectable()
@@ -12,66 +9,35 @@ export class CreateProfileService {
   constructor(
     @InjectRepository(ProfileEntity)
     private readonly profileRepository: Repository<ProfileEntity>,
-
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    private readonly createProfileValidator: CreateProfileValidator,
   ) {}
 
-  async execute(
-    input: CreateProfileInputDto,
+  async createProfile(
+    idUsers: string,
     ipAddress?: string,
     userAgent?: string,
-  ): Promise<CreateProfileResponseDto> {
+  ): Promise<ProfileEntity> {
 
-    CreateProfileValidator.ensureValidInput(input);
+    CreateProfileValidator.ensureValidInput({ idUsers });
 
-    const user = await this.userRepository.findOne({
-      where: { idUsers: input.idUsers },
-    });
+    const user = await this.createProfileValidator.ensureUserExists(idUsers);
 
-    if (!user) {
-      throw new NotFoundException('Usuário não encontrado.');
-    }
-
-    const existingProfile = await this.profileRepository.findOne({
-      where: { user: { idUsers: input.idUsers } },
-    });
-
-    if (existingProfile) {
-      throw new BadRequestException('Este usuário já possui um perfil cadastrado.');
-    }
+    await this.createProfileValidator.ensureUserHasNoProfile(idUsers);
 
     const profile = this.profileRepository.create({
       user,
-      phone: input.phone,
-      currentWeight: input.currentWeight,
-      currentHeight: input.currentHeight,
-      currentImc: input.currentImc,
-      birthDate: input.birthDate ? new Date(input.birthDate) : undefined,
-      sex: input.sex,
-      activityLevel: input.activityLevel,
-      goal: input.goal,
+      phone: undefined,
+      currentWeight: undefined,
+      currentHeight: undefined,
+      currentImc: undefined,
+      birthDate: undefined,
+      sex: undefined,
+      activityLevel: undefined,
+      goal: undefined,
       ipAddress,
       userAgent,
     });
 
-    const saved = await this.profileRepository.save(profile);
-
-    return {
-      idProfiles: saved.idProfiles,
-      idUsers: user.idUsers,
-      phone: saved.phone,
-      currentWeight: saved.currentWeight,
-      currentHeight: saved.currentHeight,
-      currentImc: saved.currentImc,
-      birthDate: saved.birthDate,
-      sex: saved.sex,
-      activityLevel: saved.activityLevel,
-      goal: saved.goal,
-      ipAddress: saved.ipAddress,
-      userAgent: saved.userAgent,
-      createdAt: saved.createdAt,
-      updatedAt: saved.updatedAt,
-    };
+    return await this.profileRepository.save(profile);
   }
 }

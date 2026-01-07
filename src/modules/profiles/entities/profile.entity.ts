@@ -22,39 +22,39 @@ export class ProfileEntity {
   @Column({ nullable: true })
   phone?: string;
 
-   @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true })
+  @Column({ type: 'int', nullable: true })
   currentWeight?: number;
 
-  @Column({ type: 'decimal', precision: 4, scale: 2, nullable: true })
+  @Column({ type: 'int', nullable: true })
   currentHeight?: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   currentImc?: number;
 
   @Column({ type: 'date', nullable: true })
-  birthDate?: Date;
+  birthDate?: string;
 
   @Column({ type: 'enum', enum: ['male', 'female', 'other'], nullable: true })
   sex?: 'male' | 'female' | 'other';
 
-  @Column({ 
+  @Column({
     type: 'enum',
     enum: ['sedentary', 'light', 'moderate', 'active', 'very_active'],
     nullable: true
   })
   activityLevel?: 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active';
 
-  @Column({ 
+  @Column({
     type: 'enum',
     enum: ['lose_weight', 'maintain', 'gain_weight'],
     nullable: true
   })
   goal?: 'lose_weight' | 'maintain' | 'gain_weight';
 
-  @Column({ name: "ip_address", nullable: true })
+  @Column({ name: 'ip_address', nullable: true })
   ipAddress?: string;
 
-  @Column({ name: "user_agent", nullable: true })
+  @Column({ name: 'user_agent', nullable: true })
   userAgent?: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })

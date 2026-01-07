@@ -21,7 +21,7 @@ export class GetProfileResponseDto {
   currentImc?: number;
 
   @Field({ nullable: true })
-  birthDate?: Date;
+  birthDate?: string;
 
   @Field({ nullable: true })
   sex?: 'male' | 'female' | 'other';

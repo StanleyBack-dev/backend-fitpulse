@@ -5,9 +5,6 @@ export class CreateProfileResponseDto {
   @Field()
   idProfiles: string;
 
-  @Field()
-  idUsers: string;
-
   @Field({ nullable: true })
   phone?: string;
 
@@ -20,8 +17,8 @@ export class CreateProfileResponseDto {
   @Field({ nullable: true })
   currentImc?: number;
 
-  @Field({ nullable: true })
-  birthDate?: Date;
+@Field({ nullable: true })
+birthDate?: string;
 
   @Field({ nullable: true })
   sex?: 'male' | 'female' | 'other';

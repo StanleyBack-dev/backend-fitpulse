@@ -1,50 +1,40 @@
-import { BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ProfileEntity } from '../../entities/profile.entity';
+import { UserEntity } from '../../../users/entities/user.entity';
 import { CreateProfileInputDto } from '../../dtos/create/create-profile-input.dto';
 
+@Injectable()
 export class CreateProfileValidator {
-  // VALIDA SE O INPUT TEM O MÍNIMO NECESSÁRIO PRA CRIAR UM PERFIL
-  static ensureValidInput(input: CreateProfileInputDto): void {
+  constructor(
+    @InjectRepository(ProfileEntity)
+    private readonly profileRepository: Repository<ProfileEntity>,
+
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) {}
+
+  static ensureValidInput(input: Partial<CreateProfileInputDto> & { idUsers?: string }): void {
     if (!input.idUsers) {
-      throw new BadRequestException(
-        'O ID do usuário é obrigatório para criar um perfil.'
-      );
+      throw new BadRequestException('O ID do usuário é obrigatório para criar um perfil.');
     }
+  }
 
-    const hasAnyProfileField =
-      input.phone ||
-      input.currentHeight ||
-      input.currentWeight ||
-      input.currentImc ||
-      input.birthDate ||
-      input.sex ||
-      input.activityLevel ||
-      input.goal;
-
-    if (!hasAnyProfileField) {
-      throw new BadRequestException(
-        'Informe ao menos um dado de perfil (ex: altura, peso, sexo ou data de nascimento).'
-      );
+  async ensureUserExists(idUsers: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({ where: { idUsers } });
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado.');
     }
+    return user;
+  }
 
-    // REGRA DE NEGÓCIO: PESO SEM ALTURA NÃO SERVE PRA IMC
-    if (input.currentWeight && !input.currentHeight) {
-      throw new BadRequestException(
-        'Para informar o peso, a altura também deve ser informada.'
-      );
-    }
-
-    // REGRA DE NEGÓCIO: ALTURA SEM PESO NÃO SERVE PRA IMC
-    if (input.currentHeight && !input.currentWeight) {
-      throw new BadRequestException(
-        'Para informar a altura, o peso também deve ser informado.'
-      );
-    }
-
-    // REGRA DE NEGÓCIO: IMC não deve ser informado manualmente se altura e peso não forem informados
-    if (input.currentImc && (!input.currentHeight || !input.currentWeight)) {
-      throw new BadRequestException(
-        'Para calcular o IMC, é necessário informar altura e peso.'
-      );
+  async ensureUserHasNoProfile(idUsers: string): Promise<void> {
+    const existing = await this.profileRepository.findOne({
+      where: { user: { idUsers } },
+    });
+    if (existing) {
+      throw new BadRequestException('Este usuário já possui um perfil cadastrado.');
     }
   }
 }

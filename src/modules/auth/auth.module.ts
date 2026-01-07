@@ -5,6 +5,7 @@ import { forwardRef } from '@nestjs/common';
 // MODULES
 import { UsersModule } from '../users/users.module';
 import { SessionsModule } from '../sessions/sessions.module';
+import { ProfilesModule } from '../profiles/profile.module';
 
 // SERVICES
 import { AuthService } from './services/auth.service';
@@ -27,6 +28,7 @@ import { SessionController } from './controllers/session.controller';
   imports: [
     forwardRef(() => UsersModule),
     SessionsModule,
+    ProfilesModule,
   ],
   controllers: [
     GoogleController, 
