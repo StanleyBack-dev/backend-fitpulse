@@ -21,7 +21,7 @@ export class CreateHealthResponseDto {
   observation?: string;
 
   @Field()
-  measurementDate: Date;
+  measurementDate: string;
 
   @Field()
   createdAt: Date;

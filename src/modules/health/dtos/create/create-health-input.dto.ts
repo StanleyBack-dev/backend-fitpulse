@@ -30,5 +30,5 @@ export class CreateHealthInputDto {
 
   @Field()
   @IsDateString()
-  measurementDate: Date;
+  measurementDate: string;
 }

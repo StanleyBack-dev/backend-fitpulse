@@ -11,8 +11,23 @@ export class HealthBaseValidator {
     }
   }
 
-  static validateDate(date?: Date): void {
-    if (date && new Date(date) > new Date()) {
+  // CORREÇÃO AQUI: Aceitar string | Date
+  static validateDate(date?: string | Date): void {
+    if (!date) return;
+
+    // Converte para objeto Date para fazer a comparação matemática
+    const dateObj = new Date(date);
+    const now = new Date();
+
+    // Verifica se é uma data válida
+    if (isNaN(dateObj.getTime())) {
+      throw new BadRequestException('Data inválida.');
+    }
+
+    // Compara se é futuro
+    // Nota: new Date("2026-01-10") cria 00:00 UTC. 
+    // Se for "hoje", geralmente 00:00 é menor que "agora", então passa.
+    if (dateObj > now) {
       throw new BadRequestException('A data da medição não pode ser no futuro.');
     }
   }

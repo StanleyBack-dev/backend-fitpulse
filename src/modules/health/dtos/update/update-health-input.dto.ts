@@ -35,9 +35,7 @@ export class UpdateHealthInputDto {
   @IsString()
   observation?: string;
 
-
-  @Field({ nullable: true })
-  @IsOptional()
+  @Field()
   @IsDateString()
-  measurementDate?: Date;
+  measurementDate: string;
 }

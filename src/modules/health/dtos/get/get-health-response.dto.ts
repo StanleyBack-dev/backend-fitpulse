@@ -20,12 +20,12 @@ export class GetHealthResponseDto {
   @Field({ nullable: true })
   observation?: string;
 
-  @Field()
-  measurementDate: Date;
+  @Field(() => String)
+  measurementDate: string;
 
   @Field()
-  createdAt: Date;
+  createdAt: string;
 
   @Field()
-  updatedAt: Date;
+  updatedAt: string;
 }

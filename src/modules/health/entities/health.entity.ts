@@ -37,7 +37,7 @@ export class HealthEntity {
   observation?: string;
 
   @Column({ name: 'measurement_date', type: 'date' })
-  measurementDate: Date;
+  measurementDate: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

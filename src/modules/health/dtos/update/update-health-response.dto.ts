@@ -21,7 +21,7 @@ export class UpdateHealthResponseDto {
   observation?: string;
 
   @Field()
-  measurementDate: Date;
+  measurementDate: string;
 
   @Field()
   updatedAt: Date;
