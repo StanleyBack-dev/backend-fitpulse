@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { HealthEntity } from '../../entities/health.entity';
 import { UpdateHealthInputDto } from '../../dtos/update/update-health-input.dto';
 import { HealthBaseValidator } from '../base/base-health.validator';
-import { calculateBMI } from 'src/common/utils/bmi.util';
+import { calculateBMI } from "../../../../common/utils/bmi.util";
 
 export class UpdateHealthValidator extends HealthBaseValidator {
 

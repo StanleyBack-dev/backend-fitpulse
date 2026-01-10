@@ -3,7 +3,7 @@ import { CreateHealthInputDto } from "../../dtos/create/create-health-input.dto"
 import { BadRequestException } from "@nestjs/common";
 import { Repository, Between } from "typeorm";
 import { HealthEntity } from "../../entities/health.entity";
-import { calculateBMI } from "src/common/utils/bmi.util";
+import { calculateBMI } from "../../../../common/utils/bmi.util";
 
 export class CreateHealthValidator extends HealthBaseValidator {
   static async validateAndCreate(
