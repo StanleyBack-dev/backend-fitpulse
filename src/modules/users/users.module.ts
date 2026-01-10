@@ -19,6 +19,7 @@ import { CreateUserService } from "./services/create/create-user.service";
 
 // RESOLVERS
 import { GetUsersResolver } from "./resolvers/get/get-users.resolver";
+import { UpdateUserResolver } from "./resolvers/update/update-users.resolver";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { GetUsersResolver } from "./resolvers/get/get-users.resolver";
     UpdateUserLoginService,
     UserExistsValidator,
     GetUsersResolver,
+    UpdateUserResolver
   ],
   exports: [
     CreateUserService,

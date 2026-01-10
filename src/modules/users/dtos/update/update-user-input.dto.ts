@@ -3,9 +3,10 @@ import { IsUUID, IsOptional, IsString, IsBoolean, IsUrl } from 'class-validator'
 
 @InputType()
 export class UpdateUserInputDto {
-  @Field()
+  @Field({ nullable: true })
+  @IsOptional()
   @IsUUID()
-  idUsers: string;
+  idUsers?: string;
 
   @Field({ nullable: true })
   @IsOptional()
