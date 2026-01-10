@@ -4,11 +4,11 @@ import { CreateHealthInputDto } from '../../dtos/create/create-health-input.dto'
 import { CreateHealthResponseDto } from '../../dtos/create/create-health-response.dto';
 import { CurrentUser } from '../../../../common/decorators/current-user.decorator';
 
-@Resolver()
+@Resolver(() => CreateHealthResponseDto)
 export class CreateHealthResolver {
   constructor(private readonly createHealthService: CreateHealthService) {}
-
-  @Mutation(() => CreateHealthResponseDto)
+  
+  @Mutation(() => CreateHealthResponseDto, { name: 'createHealth' })
   async createHealth(
     @CurrentUser() user: any,
     @Args('input') input: CreateHealthInputDto,

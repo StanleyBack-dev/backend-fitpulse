@@ -1,14 +1,11 @@
-import { ObjectType, Field, Float } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 
 @ObjectType()
 export class GetHealthResponseDto {
   @Field()
   idHealth: string;
 
-  @Field()
-  idUsers: string;
-
-  @Field(() => Float)
+  @Field(() => Int)
   heightCm: number;
 
   @Field(() => Float)

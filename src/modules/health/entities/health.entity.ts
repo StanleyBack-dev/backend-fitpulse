@@ -21,13 +21,13 @@ export class HealthEntity {
   @Column({ name: 'idtb_users', type: 'uuid' })
   idUsers: string;
 
-  @Column({ name: 'height_cm', type: 'decimal', precision: 5, scale: 2 })
+  @Column({ name: 'height_cm', type: 'int' })
   heightCm: number;
 
-  @Column({ name: 'weight_kg', type: 'decimal', precision: 5, scale: 2 })
+  @Column({ name: 'weight_kg', type: 'float' })
   weightKg: number;
 
-  @Column({ name: 'bmi', type: 'decimal', precision: 5, scale: 2 })
+  @Column({ name: 'bmi', type: 'float' })
   bmi: number;
 
   @Column({ name: 'bmi_status', length: 50 })
@@ -36,7 +36,7 @@ export class HealthEntity {
   @Column({ name: 'observation', type: 'text', nullable: true })
   observation?: string;
 
-  @Column({ name: 'measurement_date', type: 'timestamp' })
+  @Column({ name: 'measurement_date', type: 'date' })
   measurementDate: Date;
 
   @CreateDateColumn({ name: 'created_at' })

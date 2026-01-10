@@ -16,17 +16,4 @@ export class HealthBaseValidator {
       throw new BadRequestException('A data da medição não pode ser no futuro.');
     }
   }
-
-  static calculateBMI(heightCm: number, weightKg: number): { bmi: number; status: string } {
-    const heightM = heightCm / 100;
-    const bmi = Number((weightKg / (heightM * heightM)).toFixed(2));
-
-    let status = '';
-    if (bmi < 18.5) status = 'Abaixo do peso';
-    else if (bmi < 25) status = 'Peso normal';
-    else if (bmi < 30) status = 'Sobrepeso';
-    else status = 'Obesidade';
-
-    return { bmi, status };
-  }
 }

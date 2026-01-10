@@ -15,6 +15,9 @@ export class ProfileEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'idtb_profiles' })
   idProfiles: string;
 
+  @Column({ name: 'idtb_users', type: 'uuid' })
+  idUsers: string;
+
   @OneToOne(() => UserEntity)
   @JoinColumn({ name: 'idtb_users' })
   user: UserEntity;
@@ -22,13 +25,13 @@ export class ProfileEntity {
   @Column({ nullable: true })
   phone?: string;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'float', nullable: true })
   currentWeight?: number;
 
   @Column({ type: 'int', nullable: true })
   currentHeight?: number;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'float', nullable: true })
   currentImc?: number;
 
   @Column({ type: 'date', nullable: true })

@@ -14,22 +14,15 @@ export class CreateHealthService {
   ) {}
 
   async execute(userId: string, input: CreateHealthInputDto): Promise<CreateHealthResponseDto> {
-    CreateHealthValidator.ensureValidData(input);
 
-    const { bmi, status } = CreateHealthValidator.calculateBMI(input.heightCm, input.weightKg);
-
-    const newRecord = this.healthRepository.create({
-      ...input,
-      idUsers: userId,
-      bmi,
-      bmiStatus: status,
-    });
-
-    const saved = await this.healthRepository.save(newRecord);
+    const saved = await CreateHealthValidator.validateAndCreate(
+      userId,
+      input,
+      this.healthRepository,
+    );
 
     return {
       idHealth: saved.idHealth,
-      idUsers: saved.idUsers,
       heightCm: saved.heightCm,
       weightKg: saved.weightKg,
       bmi: saved.bmi,

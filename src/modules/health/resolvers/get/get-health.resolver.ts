@@ -4,11 +4,11 @@ import { GetHealthInputDto } from '../../dtos/get/get-health-input.dto';
 import { GetHealthResponseDto } from '../../dtos/get/get-health-response.dto';
 import { CurrentUser } from '../../../../common/decorators/current-user.decorator';
 
-@Resolver()
+@Resolver(() => GetHealthResponseDto)
 export class GetHealthResolver {
   constructor(private readonly getHealthService: GetHealthService) {}
-
-  @Query(() => [GetHealthResponseDto])
+  
+  @Query(() => [GetHealthResponseDto], { name: 'getHealth' })
   async getHealth(
     @CurrentUser() user: any,
     @Args('input', { nullable: true }) input?: GetHealthInputDto,

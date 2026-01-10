@@ -1,5 +1,14 @@
-import { InputType, Field, Float } from '@nestjs/graphql';
-import { IsUUID, IsOptional, IsNumber, IsString, Min, Max, IsDateString } from 'class-validator';
+import { InputType, Field, Int, Float } from '@nestjs/graphql';
+import {
+  IsUUID,
+  IsOptional,
+  IsNumber,
+  IsString,
+  IsInt,
+  Min,
+  Max,
+  IsDateString,
+} from 'class-validator';
 
 @InputType()
 export class UpdateHealthInputDto {
@@ -7,9 +16,9 @@ export class UpdateHealthInputDto {
   @IsUUID()
   idHealth: string;
 
-  @Field(() => Float, { nullable: true })
+  @Field(() => Int, { nullable: true })
   @IsOptional()
-  @IsNumber()
+  @IsInt()
   @Min(50)
   @Max(250)
   heightCm?: number;
@@ -25,6 +34,7 @@ export class UpdateHealthInputDto {
   @IsOptional()
   @IsString()
   observation?: string;
+
 
   @Field({ nullable: true })
   @IsOptional()

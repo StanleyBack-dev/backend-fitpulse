@@ -4,11 +4,11 @@ import { UpdateHealthInputDto } from '../../dtos/update/update-health-input.dto'
 import { UpdateHealthResponseDto } from '../../dtos/update/update-health-response.dto';
 import { CurrentUser } from '../../../../common/decorators/current-user.decorator';
 
-@Resolver()
+@Resolver(() => UpdateHealthResponseDto)
 export class UpdateHealthResolver {
   constructor(private readonly updateHealthService: UpdateHealthService) {}
 
-  @Mutation(() => UpdateHealthResponseDto)
+  @Mutation(() => UpdateHealthResponseDto, { name: 'updateHealth' })
   async updateHealth(
     @CurrentUser() user: any,
     @Args('input') input: UpdateHealthInputDto,

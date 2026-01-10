@@ -1,10 +1,18 @@
-import { InputType, Field, Float } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, IsNumber, Min, Max, IsDateString, IsString } from 'class-validator';
+import { InputType, Field, Int, Float } from '@nestjs/graphql';
+import {
+  IsOptional,
+  IsNumber,
+  Min,
+  Max,
+  IsDateString,
+  IsString,
+  IsInt,
+} from 'class-validator';
 
 @InputType()
 export class CreateHealthInputDto {
-  @Field(() => Float)
-  @IsNumber()
+  @Field(() => Int)
+  @IsInt()
   @Min(50)
   @Max(250)
   heightCm: number;
