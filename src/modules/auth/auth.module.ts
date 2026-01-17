@@ -6,6 +6,7 @@ import { forwardRef } from '@nestjs/common';
 import { UsersModule } from '../users/users.module';
 import { SessionsModule } from '../sessions/sessions.module';
 import { ProfilesModule } from '../profiles/profile.module';
+import { MailModule } from '../../shared/mails/mail.module';
 
 // SERVICES
 import { AuthService } from './services/auth.service';
@@ -29,10 +30,11 @@ import { SessionController } from './controllers/session.controller';
     forwardRef(() => UsersModule),
     SessionsModule,
     ProfilesModule,
+    MailModule,
   ],
   controllers: [
-    GoogleController, 
-    LogoutController, 
+    GoogleController,
+    LogoutController,
     RefreshController,
     SessionController,
   ],
@@ -49,4 +51,4 @@ import { SessionController } from './controllers/session.controller';
   exports: [AuthService, TokenValidationService],
 })
 
-export class AuthModule {}
+export class AuthModule { }

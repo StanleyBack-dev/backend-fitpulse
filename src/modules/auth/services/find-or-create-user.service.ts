@@ -3,6 +3,7 @@ import { GetUsersService } from '../../users/services/get/get-users.service';
 import { CreateUserService } from '../../users/services/create/create-user.service';
 import { UpdateUserLoginService } from '../../users/services/update/update-user-login.service';
 import { CreateProfileService } from '../../profiles/services/create/create-profile.service';
+import { WelcomeEmailService } from '../../mails/services/welcome-email.service';
 
 @Injectable()
 export class FindOrCreateUserService {
@@ -11,7 +12,8 @@ export class FindOrCreateUserService {
     private readonly createUserService: CreateUserService,
     private readonly updateUserLoginService: UpdateUserLoginService,
     private readonly createProfileService: CreateProfileService,
-  ) {}
+    private readonly welcomeEmailService: WelcomeEmailService,
+  ) { }
 
   async execute(googleUser: any, ip?: string, agent?: string) {
     const { id, sub, email, name, picture } = googleUser;
@@ -42,6 +44,9 @@ export class FindOrCreateUserService {
         });
 
         await this.createProfileService.createProfile(user.idUsers, ip, agent);
+
+        await this.welcomeEmailService.send(email, name);
+
       }
     } else {
       user = await this.updateUserLoginService.updateLogin(user, ip, agent);

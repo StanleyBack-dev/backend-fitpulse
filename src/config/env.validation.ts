@@ -19,6 +19,9 @@ export const envValidationSchema = Joi.object({
   UPSTASH_REDIS_REST_URL: Joi.string().uri().required(),
   UPSTASH_REDIS_REST_TOKEN: Joi.string().min(10).required(),
 
+  // === BREVO (SMTP) ===
+  BREVO_API_KEY: Joi.string().min(10).required(),
+
   // === GOOGLE OAUTH 2.0 ===
   GOOGLE_CLIENT_ID: Joi.string().required(),
   GOOGLE_CLIENT_SECRET: Joi.string().required(),

@@ -17,6 +17,7 @@ import { HealthModule } from './modules/health/health.module';
 import { AppConfigModule } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
 import { AppCacheModule } from './common/cache/cache.modude';
+import { MailModule } from './shared/mails/mail.module';
 
 // GUARDS
 import { AuthGuard } from './common/guards/auth.guards';
@@ -26,6 +27,7 @@ import { AuthGuard } from './common/guards/auth.guards';
     AppConfigModule,
     DatabaseModule,
     AppCacheModule,
+    MailModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
