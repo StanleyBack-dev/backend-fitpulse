@@ -1,5 +1,6 @@
 export const getWelcomeEmailTemplate = (name: string) => {
     const appUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const firstName = name.split(' ')[0];
 
     return `
     <!DOCTYPE html>
@@ -60,7 +61,7 @@ export const getWelcomeEmailTemplate = (name: string) => {
             <tr>
                 <td class="content" style="padding: 40px; text-align: left;">
                 
-                <h2 style="color: #ffffff; font-size: 24px; margin-bottom: 16px;">Olá, ${name}! 👋</h2>
+                <h2 style="color: #ffffff; font-size: 24px; margin-bottom: 16px;">Olá, ${firstName}! 👋</h2>
                 
                 <p style="color: #b0b0b0; font-size: 16px; line-height: 1.6; margin-bottom: 24px;">
                     Seja muito bem-vindo(a) à <strong>FitPulse</strong>. Estamos empolgados em ter você conosco nessa jornada de transformação.
