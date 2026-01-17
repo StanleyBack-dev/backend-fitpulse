@@ -46,7 +46,8 @@ export class GetHealthService {
       updatedAt: new Date(r.updatedAt).toISOString(),
     }));
 
-    await this.cacheSet.execute(cacheKey, formatted, 60 * 5);
+    // 12 HOURS
+    await this.cacheSet.execute(cacheKey, formatted, 43200);
 
     return formatted;
   }
