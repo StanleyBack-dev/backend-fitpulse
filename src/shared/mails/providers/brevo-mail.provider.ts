@@ -21,7 +21,7 @@ export class BrevoMailProvider implements IMailProvider {
         sendSmtpEmail.to = [{ email: to }];
         sendSmtpEmail.subject = subject;
         sendSmtpEmail.htmlContent = body;
-        sendSmtpEmail.sender = { email: from || 'no-reply@fitpulseio.com', name: 'FitPulse' };
+        sendSmtpEmail.sender = { email: from || 'no-reply@fitpulseio.com.br', name: 'FitPulse' };
 
         await this.apiInstance.sendTransacEmail(sendSmtpEmail);
     }
