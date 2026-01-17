@@ -16,6 +16,7 @@ import { SessionsModule } from './modules/sessions/sessions.module';
 import { HealthModule } from './modules/health/health.module';
 import { AppConfigModule } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
+import { AppCacheModule } from './common/cache/cache.modude';
 
 // GUARDS
 import { AuthGuard } from './common/guards/auth.guards';
@@ -24,6 +25,7 @@ import { AuthGuard } from './common/guards/auth.guards';
   imports: [
     AppConfigModule,
     DatabaseModule,
+    AppCacheModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
@@ -52,4 +54,4 @@ import { AuthGuard } from './common/guards/auth.guards';
   ],
 })
 
-export class AppModule {}
+export class AppModule { }

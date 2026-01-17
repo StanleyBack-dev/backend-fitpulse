@@ -6,8 +6,8 @@ import { CurrentUser } from '../../../../common/decorators/current-user.decorato
 
 @Resolver(() => GetHealthResponseDto)
 export class GetHealthResolver {
-  constructor(private readonly getHealthService: GetHealthService) {}
-  
+  constructor(private readonly getHealthService: GetHealthService) { }
+
   @Query(() => [GetHealthResponseDto], { name: 'getHealth' })
   async getHealth(
     @CurrentUser() user: any,

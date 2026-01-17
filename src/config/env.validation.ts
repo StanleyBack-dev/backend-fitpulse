@@ -15,6 +15,10 @@ export const envValidationSchema = Joi.object({
   DB_SSL: Joi.boolean().truthy('true').falsy('false').default(false),
   TYPEORM_LOGGING: Joi.boolean().truthy('true').falsy('false').default(false),
 
+  // === REDIS (UPSTASH REST) ===
+  UPSTASH_REDIS_REST_URL: Joi.string().uri().required(),
+  UPSTASH_REDIS_REST_TOKEN: Joi.string().min(10).required(),
+
   // === GOOGLE OAUTH 2.0 ===
   GOOGLE_CLIENT_ID: Joi.string().required(),
   GOOGLE_CLIENT_SECRET: Joi.string().required(),

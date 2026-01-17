@@ -6,8 +6,8 @@ import { CurrentUser } from '../../../../common/decorators/current-user.decorato
 
 @Resolver(() => UpdateHealthResponseDto)
 export class UpdateHealthResolver {
-  constructor(private readonly updateHealthService: UpdateHealthService) {}
-  
+  constructor(private readonly updateHealthService: UpdateHealthService) { }
+
   @Mutation(() => UpdateHealthResponseDto, { name: 'updateHealth' })
   async updateHealth(
     @CurrentUser() user: any,

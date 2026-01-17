@@ -5,21 +5,21 @@ import { HealthEntity } from '../../entities/health.entity';
 import { CreateHealthInputDto } from '../../dtos/create/create-health-input.dto';
 import { CreateHealthResponseDto } from '../../dtos/create/create-health-response.dto';
 import { CreateHealthValidator } from '../../validators/create/create-health.validator';
+import { CacheDelProvider } from '../../../../common/cache/providers/cache-del.provider';
 
 @Injectable()
 export class CreateHealthService {
   constructor(
     @InjectRepository(HealthEntity)
     private readonly healthRepository: Repository<HealthEntity>,
-  ) {}
+    private readonly cacheDel: CacheDelProvider,
+  ) { }
 
   async execute(userId: string, input: CreateHealthInputDto): Promise<CreateHealthResponseDto> {
 
-    const saved = await CreateHealthValidator.validateAndCreate(
-      userId,
-      input,
-      this.healthRepository,
-    );
+    const saved = await CreateHealthValidator.validateAndCreate(userId, input, this.healthRepository);
+
+    await this.cacheDel.execute(`health:list:user:${userId}`);
 
     return {
       idHealth: saved.idHealth,
