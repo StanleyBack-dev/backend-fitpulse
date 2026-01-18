@@ -21,6 +21,7 @@ import { MailModule } from './shared/mails/mail.module';
 
 // GUARDS
 import { AuthGuard } from './common/guards/auth.guards';
+import { RateLimitGuard } from './common/guards/rate-limit.guard';
 
 @Module({
   imports: [
@@ -44,6 +45,10 @@ import { AuthGuard } from './common/guards/auth.guards';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RateLimitGuard,
     },
     {
       provide: APP_INTERCEPTOR,

@@ -10,7 +10,7 @@ export class GetUsersService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly repo: Repository<UserEntity>,
-  ) {}
+  ) { }
 
   async findOne(input: GetUserInputDto) {
     GetUserValidator.ensureValidInput(input);

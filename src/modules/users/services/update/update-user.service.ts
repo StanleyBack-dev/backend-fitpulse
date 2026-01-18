@@ -11,13 +11,13 @@ export class UpdateUserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly repo: Repository<UserEntity>,
-  ) {}
+  ) { }
 
   async execute(
     userId: string,
     input: UpdateUserInputDto
   ): Promise<UpdateUserResponseDto> {
-    
+
     UpdateUserValidator.ensureValidUpdate(input);
 
     const user = await this.repo.findOne({

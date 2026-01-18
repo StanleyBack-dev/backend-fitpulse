@@ -32,4 +32,26 @@ export const envValidationSchema = Joi.object({
   JWT_EXPIRES_IN: Joi.string().default('7d'),
   JWT_REFRESH_SECRET: Joi.string().min(32).required(),
   JWT_REFRESH_EXPIRES_IN: Joi.string().default('30d'),
+
+  // === RATE LIMIT CONFIG ===
+  RATE_LIMIT_GLOBAL_TTL: Joi.number().default(60),
+  RATE_LIMIT_GLOBAL_LIMIT: Joi.number().default(100),
+
+  RATE_LIMIT_AUTH_TTL: Joi.number().default(60),
+  RATE_LIMIT_AUTH_LIMIT: Joi.number().default(5),
+
+  RATE_LIMIT_SESSIONS_TTL: Joi.number().default(60),
+  RATE_LIMIT_SESSIONS_LIMIT: Joi.number().default(100),
+
+  RATE_LIMIT_USERS_TTL: Joi.number().default(60),
+  RATE_LIMIT_USERS_LIMIT: Joi.number().default(200),
+
+  RATE_LIMIT_MAILS_TTL: Joi.number().default(3600),
+  RATE_LIMIT_MAILS_LIMIT: Joi.number().default(5),
+
+  RATE_LIMIT_HEALTH_TTL: Joi.number().default(30),
+  RATE_LIMIT_HEALTH_LIMIT: Joi.number().default(30),
+
+  RATE_LIMIT_DEFAULT_TTL: Joi.number().default(60),
+  RATE_LIMIT_DEFAULT_LIMIT: Joi.number().default(50),
 });
