@@ -7,7 +7,7 @@ import { CurrentUser } from '../../../../common/decorators/current-user.decorato
 
 @Resolver()
 export class UpdateUserResolver {
-  constructor(private readonly updateUserService: UpdateUserService) {}
+  constructor(private readonly updateUserService: UpdateUserService) { }
 
   @Mutation(() => UpdateUserResponseDto)
   async updateUser(

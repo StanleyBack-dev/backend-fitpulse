@@ -9,15 +9,6 @@ export class GetProfileResponseDto {
   phone?: string;
 
   @Field({ nullable: true })
-  currentWeight?: number;
-
-  @Field({ nullable: true })
-  currentHeight?: number;
-
-  @Field({ nullable: true })
-  currentImc?: number;
-
-  @Field({ nullable: true })
   birthDate?: string;
 
   @Field({ nullable: true })
@@ -28,16 +19,4 @@ export class GetProfileResponseDto {
 
   @Field({ nullable: true })
   goal?: 'lose_weight' | 'maintain' | 'gain_weight';
-
-  @Field({ nullable: true })
-  ipAddress?: string;
-
-  @Field({ nullable: true })
-  userAgent?: string;
-
-  @Field()
-  createdAt: Date;
-
-  @Field()
-  updatedAt: Date;
 }

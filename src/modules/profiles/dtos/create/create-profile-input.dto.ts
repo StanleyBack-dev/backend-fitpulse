@@ -3,40 +3,16 @@ import {
   IsOptional,
   IsEnum,
   IsDateString,
-  IsInt,
   IsPhoneNumber,
-  Min,
-  Max,
 } from 'class-validator';
 
 @InputType()
 export class CreateProfileInputDto {
-  
+
   @Field({ nullable: true })
   @IsOptional()
   @IsPhoneNumber('BR')
   phone?: string;
-
-  @Field({ nullable: true })
-  @IsOptional()
-  @IsInt()
-  @Min(20)
-  @Max(500)
-  currentWeight?: number;
-
-  @Field({ nullable: true })
-  @IsOptional()
-  @IsInt()
-  @Min(100)
-  @Max(250)
-  currentHeight?: number;
-
-  @Field({ nullable: true })
-  @IsOptional()
-  @IsInt()
-  @Min(10)
-  @Max(80)
-  currentImc?: number;
 
   @Field({ nullable: true })
   @IsOptional()

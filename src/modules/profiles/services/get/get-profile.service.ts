@@ -5,47 +5,61 @@ import { ProfileEntity } from '../../entities/profile.entity';
 import { GetProfileInputDto } from '../../dtos/get/get-profile-input.dto';
 import { GetProfileResponseDto } from '../../dtos/get/get-profile-response.dto';
 import { GetProfileValidator } from '../../validators/get/get-profile.validator';
+import { CacheGetProvider } from '../../../../common/cache/providers/cache-get.provider';
+import { CacheSetProvider } from '../../../../common/cache/providers/cache-set.provider';
 
 @Injectable()
 export class GetProfileService {
   constructor(
     @InjectRepository(ProfileEntity)
     private readonly profileRepository: Repository<ProfileEntity>,
-  ) {}
+    private readonly cacheGet: CacheGetProvider,
+    private readonly cacheSet: CacheSetProvider,
+  ) { }
 
   async findByUser(userId: string): Promise<GetProfileResponseDto> {
+    const cacheKey = `profile:user:${userId}`;
+
+    const cached = await this.cacheGet.execute<GetProfileResponseDto>(cacheKey);
+    if (cached) return cached;
+
     const profile = await GetProfileValidator.ensureProfileExistsByUser(
       userId,
-      this.profileRepository
+      this.profileRepository,
     );
 
-    return this.mapToResponse(profile);
+    const formatted = this.mapToResponse(profile);
+
+    await this.cacheSet.execute(cacheKey, formatted, 43200);
+
+    return formatted;
   }
 
   async findOne(input: GetProfileInputDto): Promise<GetProfileResponseDto> {
+    const cacheKey = `profile:findOne:${input.idProfiles}`;
+
+    const cached = await this.cacheGet.execute<GetProfileResponseDto>(cacheKey);
+    if (cached) return cached;
+
     const profile = await GetProfileValidator.ensureProfileExists(
       input,
-      this.profileRepository
+      this.profileRepository,
     );
 
-    return this.mapToResponse(profile);
+    const formatted = this.mapToResponse(profile);
+    await this.cacheSet.execute(cacheKey, formatted, 43200);
+
+    return formatted;
   }
 
   private mapToResponse(profile: ProfileEntity): GetProfileResponseDto {
     return {
       idProfiles: profile.idProfiles,
       phone: profile.phone,
-      currentWeight: profile.currentWeight,
-      currentHeight: profile.currentHeight,
-      currentImc: profile.currentImc,
       birthDate: profile.birthDate,
       sex: profile.sex,
       activityLevel: profile.activityLevel,
       goal: profile.goal,
-      ipAddress: profile.ipAddress,
-      userAgent: profile.userAgent,
-      createdAt: profile.createdAt,
-      updatedAt: profile.updatedAt,
     };
   }
 }

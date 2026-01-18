@@ -1,4 +1,4 @@
-import { 
+import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
@@ -24,15 +24,6 @@ export class ProfileEntity {
 
   @Column({ nullable: true })
   phone?: string;
-
-  @Column({ type: 'float', nullable: true })
-  currentWeight?: number;
-
-  @Column({ type: 'int', nullable: true })
-  currentHeight?: number;
-
-  @Column({ type: 'float', nullable: true })
-  currentImc?: number;
 
   @Column({ type: 'date', nullable: true })
   birthDate?: string;

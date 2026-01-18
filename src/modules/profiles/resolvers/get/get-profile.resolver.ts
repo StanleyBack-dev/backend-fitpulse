@@ -6,8 +6,8 @@ import { CurrentUser } from '../../../../common/decorators/current-user.decorato
 
 @Resolver()
 export class GetProfileResolver {
-  constructor(private readonly getProfileService: GetProfileService) {}
-  
+  constructor(private readonly getProfileService: GetProfileService) { }
+
   @Query(() => GetProfileResponseDto)
   async getMyProfile(
     @CurrentUser() user: any,

@@ -7,7 +7,7 @@ import { CurrentUser } from "../../../../common/decorators/current-user.decorato
 
 @Resolver()
 export class GetUsersResolver {
-  constructor(private readonly getUsersService: GetUsersService) {}
+  constructor(private readonly getUsersService: GetUsersService) { }
 
   @Query(() => [GetUserResponseDto], { name: "getUsers" })
   async getUsers(): Promise<GetUserResponseDto[]> {
@@ -20,7 +20,7 @@ export class GetUsersResolver {
   ): Promise<GetUserResponseDto> {
     return this.getUsersService.findOne(input);
   }
-  
+
   @Query(() => GetUserResponseDto, { name: "me" })
   async me(@CurrentUser() user: any): Promise<GetUserResponseDto> {
     return this.getUsersService.findOne({ idUsers: user.idUsers });

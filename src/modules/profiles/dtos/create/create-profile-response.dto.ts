@@ -9,16 +9,7 @@ export class CreateProfileResponseDto {
   phone?: string;
 
   @Field({ nullable: true })
-  currentWeight?: number;
-
-  @Field({ nullable: true })
-  currentHeight?: number;
-
-  @Field({ nullable: true })
-  currentImc?: number;
-
-@Field({ nullable: true })
-birthDate?: string;
+  birthDate?: string;
 
   @Field({ nullable: true })
   sex?: 'male' | 'female' | 'other';

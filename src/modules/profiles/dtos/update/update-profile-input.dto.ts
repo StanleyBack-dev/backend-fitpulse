@@ -18,27 +18,6 @@ export class UpdateProfileInputDto {
 
   @Field({ nullable: true })
   @IsOptional()
-  @IsNumber()
-  @Min(20)
-  @Max(500)
-  currentWeight?: number;
-
-  @Field({ nullable: true })
-  @IsOptional()
-  @IsNumber()
-  @Min(100)
-  @Max(250)
-  currentHeight?: number;
-
-  @Field({ nullable: true })
-  @IsOptional()
-  @IsNumber()
-  @Min(10)
-  @Max(80)
-  currentImc?: number;
-
-  @Field({ nullable: true })
-  @IsOptional()
   @IsDateString()
   birthDate?: string;
 

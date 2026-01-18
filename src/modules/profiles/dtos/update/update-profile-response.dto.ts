@@ -9,15 +9,6 @@ export class UpdateProfileResponseDto {
   phone?: string;
 
   @Field({ nullable: true })
-  currentWeight?: number;
-
-  @Field({ nullable: true })
-  currentHeight?: number;
-
-  @Field({ nullable: true })
-  currentImc?: number;
-
-  @Field({ nullable: true })
   birthDate?: string;
 
   @Field({ nullable: true })
@@ -28,10 +19,4 @@ export class UpdateProfileResponseDto {
 
   @Field({ nullable: true })
   goal?: 'lose_weight' | 'maintain' | 'gain_weight';
-
-  @Field()
-  createdAt: Date;
-
-  @Field()
-  updatedAt: Date;
 }

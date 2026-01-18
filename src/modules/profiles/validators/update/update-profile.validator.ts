@@ -15,20 +15,6 @@ export class UpdateProfileValidator {
     }
   }
 
-  static validateNumbers(input: UpdateProfileInputDto): void {
-    if (input.currentWeight && (input.currentWeight < 20 || input.currentWeight > 500)) {
-      throw new BadRequestException('currentWeight deve estar entre 20 e 500 kg.');
-    }
-
-    if (input.currentHeight && (input.currentHeight < 100 || input.currentHeight > 250)) {
-      throw new BadRequestException('currentHeight deve estar entre 100 e 250 cm.');
-    }
-
-    if (input.currentImc && (input.currentImc < 1700 || input.currentImc > 6000)) {
-      throw new BadRequestException('currentImc deve estar entre 1700 e 6000.');
-    }
-  }
-
   static validateEnums(input: UpdateProfileInputDto): void {
     const sexOptions = ['male', 'female', 'other'];
     const activityOptions = ['sedentary', 'light', 'moderate', 'active', 'very_active'];
@@ -49,7 +35,6 @@ export class UpdateProfileValidator {
 
   static validate(input: UpdateProfileInputDto): void {
     this.ensureHasFields(input);
-    this.validateNumbers(input);
     this.validateEnums(input);
   }
 
